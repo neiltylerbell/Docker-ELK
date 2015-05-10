@@ -17,8 +17,7 @@ ENV KIBANA_VERSION 3.1.2
 
 # Upgrade, get and install packages 
 RUN apt-get update -y && apt-get dist-upgrade -y
-RUN apt-get install -y apache2 supervisor wget openjdk-7-jdk openjdk-7-jre-headless python-pip
-RUN a2enmod proxy proxy_http
+RUN apt-get install -y apache2 supervisor wget openjdk-7-jdk openjdk-7-jre-headless
 RUN cd /tmp; wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}.deb && dpkg -i elasticsearch-${ELASTICSEARCH_VERSION}.deb
 RUN cd /tmp; wget https://download.elasticsearch.org/logstash/logstash/packages/debian/logstash_${LOGSTASH_VERSION}.deb && dpkg -i logstash_${LOGSTASH_VERSION}.deb
 Run cd /tmp; wget https://download.elasticsearch.org/kibana/kibana/kibana-${KIBANA_VERSION}.tar.gz; tar xvf kibana-${KIBANA_VERSION}.tar.gz; mv kibana-${KIBANA_VERSION}/* /var/www/html/
@@ -28,6 +27,9 @@ ADD assets/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ADD assets/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 ADD assets/000-default.conf /etc/apache2/sites-available/000-default.conf 
 ADD assets/logstash.conf /etc/logstash/conf.d/logstash.conf
+
+VOLUME ["/usr/local/elasticsearch", "/var/log/apache2"]
+EXPOSE 9200 514/udp
 
 # Start ELK
 CMD ["/usr/bin/supervisord"]
