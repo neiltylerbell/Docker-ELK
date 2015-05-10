@@ -1,0 +1,4 @@
+path:
+  logs: /data/elk/log
+  data: /data/elk/data
+http.cors.enabled: true
