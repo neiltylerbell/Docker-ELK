@@ -7,7 +7,6 @@ MAINTAINER neiltylerbell
 ENV DEBIAN_FRONTEND noninteractive
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
 ENV ELASTICSEARCH_VERSION 1.4.4
 #####
 # Logstash version includes a random string
